@@ -13,28 +13,29 @@
 \usepackage[brazil]{babel}
 \usepackage{graphicx}
 \usepackage[alf]{abntcite}
-\usepackage{listingsutf8}
+\usepackage{listings2} % http://www.atscire.de/index.php?nav=products/listings2
 \usepackage{textcomp}
 \usepackage[usenames,dvipsnames]{color} % http://en.wikibooks.org/wiki/LaTeX/Colors
 
 %-------------------------------- Highligthing ---------------------------------
 
 \lstset{
-  language=Ruby,
-  basicstyle=\ttfamily,
-  columns=flexible,
-  numberbychapter=false,
-  showstringspaces=false,
-  stringstyle=\color{red}\textit,
-  keywords={class, pass, in, for, while, if, is, elif, else, not, and, or, def, print, exec, break, continue, return, assert, from, import, with, as, require, end, do},
-  keywordstyle=\color{blue}\textbf,
-  emph={self, True, False, None, object, new},
-  emphstyle=\color{magenta}\textbf,
-  emph={[2]Funcionalidade, Como, Eu, E, quero, Para, Cenario, Dado, Quando, Entao, should, should_not, @matcher, context, it, describe, expect, to, world, @step, step, assert_equal, fail, expect, to_not, raise_error},
-  emphstyle=[2]\color{MidnightBlue}\textbf,
-  inputencoding=utf8/latin1, % http://stackoverflow.com/questions/1116266/listings-in-latex-with-utf-8-or-at-least-german-umlauts
-  identifierstyle=,
-%  frame=single,
+    basicstyle=\ttfamily\footnotesize,
+    columns=flexible,
+    numberbychapter=false,
+    showstringspaces=false,
+    stringstyle=\color{red}\textit,
+    keywordstyle=\color{blue}\textbf,
+    emphstyle=\color{magenta}\textbf,
+%    numbers=left,
+%    numberstyle=\ttfamily\footnotesize,
+%    stepnumber=1,
+%    numbersep=10pt,
+%    keywords={class, pass, in, for, while, if, is, elif, else, not, and, or, def, print, exec, break, continue, return, assert, from, import, with, as, require, end, do},
+%    emph={self, True, False, None, object, new},
+%    emph={[2]Funcionalidade, Como, Eu, E, quero, Para, Cenario, Dado, Quando, Entao, should, should_not, @matcher, context, it, describe, expect, to, world, @step, step, assert_equal, fail, expect, to_not, raise_error},
+%    emphstyle=[2]\color{MidnightBlue}\textbf,
+%    frame=single,
 }
 
 
