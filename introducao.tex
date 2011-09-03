@@ -1,39 +1,37 @@
 \chapter{Introdução}
+É muito importante possuir a capacidade de visualizar de maneira clara e organizada as informações de que se tem poder. Geralmente as informações que lidamos no dia-a-dia são textuais e necessitam de tempo para serem interpretadas. Quando a quantidade destes dados é grande, se leva um tempo considerável para encontrar a informação de relevância. Nas décadas de 50 a informação começou a migrar do papel para os dispositivos eletrônicos onde pode ser mais facilmente armazenada, conservada e organizada. Mas o crescimento da quantidade de documentos armazenados tornou difícil a recuperação daqueles que são de interesse em um dado momento.
 
-Programar é resolver um problema bem definido. Desenvolvimento de software é
-definir o problema em primeiro lugar. Uma vez que você tenha a questão,
-geralmente é fácil resolve-la, uma vez que você tenha as ferramentas e
-conhecimento para usa-las. Se você não sabe a questão. as coisas ficam bem mais
-difíceis. \cite{ProgrammingIsEasySoftwareDevelopmentIsHard}
+A recuperação de informação (RI) é uma área da ciência da computação que trata do armazenamento e recuperação automatizada de documentos e para este fim utiliza o conceito de palavras-chave. As palavras-chave são unidades textuais que servem para representar documentos, elas possuem a essência do documento, descrevendo de maneira clara e precisa o seu conteúdo.
+Neste trabalho é apresentada uma abordagem de extração de palavras-chave a partir de documentos, e além disso é apresentada uma maneira de utilizar estas palavras para resumir um conjunto destes documentos. Também demonstramos a utilização de uma biblioteca criada especificamente para a avaliação dos resultados obtidos com as abordagens propostas.
 
-O desenvolvimento de software passou, e de certa forma ainda passa, por uma fase
-chamada de \emph{crise do software} \cite{HumbleProgrammer}. A Engenharia de
-Software surgiu \cite{NaurRandell} numa tentativa de contornar esta crise, no
-entanto, foi baseada na consideração extremamente equivocada de que o
-desenvolvimento de software é um trabalho executado por trabalhadores manuais e
-não um trabalhadores do conhecimento \cite[38]{XPTeles}. Isso fez com que a
-Engenharia de Software falhasse na sua tentativa de contornar tal crise.
+\section{Motivação}
+O tráfego na internet têm crescido numa escala de 100\% a cada ano a partir da década de 90, atualmente esta taxa diminuiu e está em 50\% \cite{Odlyzko2003}. A previsão é de que esta taxa diminua para 35\% no período até 2013 \cite{Cisco2009}. Este aumento do tráfego por sua vez reflete na quantidade de informações sendo lidas e armazenadas na grande rede, o volume destas cresce a cada dia, e a capacidade de extrair conhecimento relevante se torna uma dificuldade. Muitas vezes a informação está acessível, mas os métodos de busca atuais tornam difícil o seu acesso.
 
-O desenvolvimento ágil de software, que neste ano de 2011 completa 10 anos,
-surgiu \cite{AgileManifesto} para resolver esta crise que a Engenharia de
-Software tradicional não conseguiu. De acordo com \cite{PMNetworkFailureDrop}, o
-\textit{Chaos Manifesto 2011}\footnote{O \textit{Chaos Manifesto} é uma pesquisa
-bienal realizada pelo \textit{The Standish Group} e teve início em 1994. As
-pesquisas publicadas em um ano representam os dados do ano anterior.} mostra que
-os resultados de 2010 representam, desde sua primeira edição, a maior taxa de
-sucesso, que aumentou de 32\% em 2008 para 37\% em 2010. Segundo
-\cite{ResumoChaosReport}, o \textit{The Standish Group} conclui que uma das
-principais razões para o aumento da taxa de sucesso foi a utilização das
-métodologias ágeis, que cresce a uma taxa de 22\%
-CAGR\footnote{\href{http://en.wikipedia.org/wiki/Compound_annual_growth_rate}
-{Compound annual growth rate}} e hoje são adotados em 9\% de todos os projetos
-de TI em andamento e em 29\% dos novos projetos.
+A crescente massa de informação criou a necessidade da concentração desta em um lugar em comum onde a informação possa ser visualizada, organizada e classificada. Existem diversos bancos de dados e bibliotecas que disponibilizam informação, seja ela científica, cultural, empresarial ou tecnológica. Como exemplos podemos destacar:
+\begin{itemize}
+    \item PubMed\footnote{\href{http://www.ncbi.nlm.nih.gov/pubmed}{http://www.ncbi.nlm.nih.gov/pubmed}}:
+    Possui mais de 21 milhões de citações de literatura biomédica do MEDLINE, periódicos científicos e e-books.
+    \item Science Direct\footnote{\href{http://www.sciencedirect.com/}{http://www.sciencedirect.com/}}:
+    Banco de dados do SciVerse com mais de 10 milhões de artigos científicos e capítulos de livros.
+    \item CiteULike\footnote{\href{http://www.citeulike.org/}{http://www.citeulike.org/}}:
+    Serviço gratuito para encontrar e gerenciar referencias acadêmicas, possui atualmente cerca de 5 milhões de documentos.
+    \item IEEE Xplore\footnote{\href{http://ieeexplore.ieee.org/Xplore/guesthome.jsp}{http://ieeexplore.ieee.org/Xplore/guesthome.jsp}}:
+    Possuindo 3 milhões de documentos, o portal da IEEE provê acesso à informação técnica em engenharia e tecnologia.
+    \item ACM Digital Library\footnote{\href{http://dl.acm.org/}{http://dl.acm.org/}}:
+    Coleção de artigos e registros bibliográficos sobre os campos de computação e tecnologia da informação.
+\end{itemize}
 
-Como o desenvolvimento ágil é relativamente novo, diversos métodos e técnicas
-vem sendo desenvolvidos tendo como base os princípios e valores ágeis
-\cite{BDDRodrigo}. Sendo técnicas emergentes, ainda são pouco discutidas no meio
-acadêmico.
+Seja usada a busca booleana ou expressões regulares como mecanismo de busca, se a base de dados for muito grande, o que acontece em muitos casos, serão retornadas grandes quantidades de documentos que tornam tedioso o processo de busca no conjunto de resultados. Quando esta quantidade de resultados passa de 200 itens, o processo de busca se torna maçante mesmo fazendo uma leitura dinâmica nos resultados. Os sistemas de recomendação que avaliam um determinado documento baseado na avaliação anterior de outros documentos similares, geram uma melhora nos resultados exibidos para um usuário, mas este tipo de filtragem reflete mais na ordenação dos documentos do que na quantidade. Uma maneira de ajudar o pesquisador é exibindo para ele palavras-chave.
 
-O objetivo desse trabalho é discutir estas técnicas, mostrando onde estas são
-melhor aplicadas, comparando as diferentes abordagens para cada técnica, bem
-como seus benefícios e malefícios.
+As palavras-chave podem ajudar o leitor a decidir se um determinado documento é de seu interesse ou não, elas dão um breve descrição sobre o conteúdo mais importante sendo abordado. Mas muitas vezes os documentos não possuem palavras-chave e o processo de atribuição é muito custoso \cite{Lui2007}. Além da sumarização, palavras-chave podem ser usadas para indexar documentos e também para tornar uma busca mais precisa \cite{Turney1999}. Neste trabalho usamos as palavras-chave para fazer sumarização de grupos de documentos, onde cada palavra-chave representa uma parte deste grupo.
+
+\section{Problema}
+A grande massa de informação disponível na internet criou a necessidade de mecanismos que possam organizá-la de maneira clara para os usuários desta rede. Esta dificuldade não é restrita à internet, mas também existe em grandes empresas e instituições. Como a maior parte desta informação está na forma de texto, muito esforço têm sido feito nas comunidades de recuperação de informação para melhorar os algoritmos de indexação/ordenação de documentos.
+
+Como um exemplo pode-se destacar o \emph{National Center for Biotechnology Information} (NCBI), que provê informações científicas sobre biomedicina e genomas. É um grande portal mantido pelo governo dos Estados Unidos da América utilizado por pesquisadores de todas partes do mundo servindo informações em seus estudos. Um de seus bancos de dados mais acessado é o PubMed, que guarda cerca de 21 milhões de artigos científicos, um número que cresce continuamente. Esta grande quantidade de informação gera dificuldade no processo de localização do material desejado com os métodos de busca tradicionais. Neste caso, os documentos textuais são artigos científicos da área de saúde. Para exemplificar o problema, ao se fazer uma busca no PubMed com um termo de busca bem geral como “tuberculosis”, foram retornados 192499 artigos. Ao se especificar este termo para “tuberculosis in children and meningitis”a quantidade de resultados diminuiu para 2388, mas ainda assim permanece grande para uma leitura rápida.
+
+\section{Trabalhos relacionados}
+Uma maneira muito utilizada atualmente para a representação de domínios se chama ontologia, onde palavras-chave são utilizadas para representar conceitos. Segundo (Gruber, 1995) “Uma ontologia é uma especificação explícita e formal de uma conceitualização”, ela descreve formalmente um domínio e é composta por termos e o relacionamento entre estes (Antoniou \& Harmelen, 2004). As ontologias são muito utilizadas nos campos de biologia e medicina, pois estas possuem uma grande quantidade de termos e relações entre eles. Têm sido feito muito esforço nas comunidades acadêmicas de vários países na pesquisa e desenvolvimento desta tecnologia. As principais ontologias atualmente são a Gene Ontology (GO) que faz um mapeamento semântico de genes e produtos genéticos como proteínas, Medical Subject Headings (MeSH) utilizado pelo NCBI na indexação de documentos científicos, Foundational Model of Anatomy (FMA) que é uma ontologia para representação de anatomia humana.
+\section{Contribuições}
+\section{Organização}
+
