@@ -5,45 +5,49 @@
 	           noindentfirst,
 	           normaltoc,
 	           pnumplain,
-	           notimes
+	           notimes,
+	           sumariocompleto,
 %	           capchap,
 ]{abnt}
 
 \usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
 \usepackage[brazil]{babel}
 \usepackage{graphicx}
 \usepackage[pdfborder={0 0 0}]{hyperref} % http://www.tug.org/applications/hyperref/manual.html
-\usepackage[alf]{abntcite}
+\usepackage[alf,bibjustif]{abntcite}
 \usepackage{listings2} % http://www.atscire.de/index.php?nav=products/listings2
 \usepackage{textcomp}
 \usepackage[usenames,dvipsnames]{color} % http://en.wikibooks.org/wiki/LaTeX/Colors
+\usepackage{amsmath}
 
 %-------------------------------- Highligthing de código ---------------------------------
 
 \lstset{
     basicstyle=\ttfamily,
+    language=Java,
     columns=flexible,
     numberbychapter=false,
     showstringspaces=false,
     stringstyle=\color{red}\textit,
     keywordstyle=\color{blue}\textbf,
     emphstyle=\color{magenta}\textbf,
-%    numbers=left,
-%    numberstyle=\ttfamily\footnotesize,
-%    stepnumber=1,
-%    numbersep=10pt,
-%    keywords={class, pass, in, for, while, if, is, elif, else, not, and, or, def, print, exec, break, continue, return, assert, from, import, with, as, require, end, do},
-%    emph={self, True, False, None, object, new},
-%    emph={[2]Funcionalidade, Como, Eu, E, quero, Para, Cenario, Dado, Quando, Entao, should, should_not, @matcher, context, it, describe, expect, to, world, @step, step, assert_equal, fail, expect, to_not, raise_error},
-%    emphstyle=[2]\color{MidnightBlue}\textbf,
-%    frame=single,
+    numbers=none,
+    numberstyle=\ttfamily\footnotesize,
+    stepnumber=1,
+    numbersep=10pt,
+    keywords={class, pass, in, for, while, if, is, elif, else, not, and, or, def, print, exec, break, continue, return, assert, from, import, with, as, require, end, do},
+    emph={ABSTRACT,MESH_TERMS,PMID,TITLE,AUTHOR_NAMES,JOURNAL_TITLE,PUB_YEAR,AUTHOR_KWS,AUTHOR},
+    emph={[2]Funcionalidade, Como, Eu, E, quero, Para, Cenario, Dado, Quando, Entao, should, should_not, @matcher, context, it, describe, expect, to, world, @step, step, assert_equal, fail, expect, to_not, raise_error},
+    emphstyle=[2]\color{MidnightBlue}\textbf,
+    frame=none,
 }
 
 
 
 %--------------------------------- Informações ---------------------------------
 
-\titulo{Uma abordagem de extração de palavras-chave para resumir documentos}
+\titulo{BioSearch Refinement: Um sistema para facilitar a busca de artigos relevantes no PubMed}
 \autor{Kirill Lassounski}
 \instituicao{Universidade Estadual do Norte Fluminense Darcy Ribeiro}
 \orientador[Orientadora: ]{Sahudy Montenegro González}
@@ -56,10 +60,11 @@
 \begin{document}
 
     \folhaderosto
-
-    \include{introducao}
-    \include{fundamentacao}
-
+    \sumario
+    \include{tex/resumo_e_abstract}
+    \include{tex/introducao}
+    \include{tex/aspectos_teoricos_e_trabalhos_relacionados}
+    \include{tex/biosearchrefinement}
     \citeoption{abnt-repeated-author-omit=yes}
     \bibliographystyle{abnt-alf}
     \bibliography{bibliografia}
