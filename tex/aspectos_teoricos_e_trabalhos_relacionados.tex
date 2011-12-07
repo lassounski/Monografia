@@ -1,0 +1,133 @@
+\chapter{Recuperação de informação}
+Um sistema que recupera informação permite um usuário manusear a informação contida em documentos, que na maioria das vezes estão em formato de texto. O objetivo do sistema é ajudar a encontrar a informação indicando a sua localização, ou informar se ela de fato existe no domínio buscado. O resultado da recuperação é um conjunto de documentos, dos quais alguns são uteis para o usuário (relevantes) e outros não (irrelevantes). Basicamente um sistema de recuperação possui: uma forma de representar os documentos, uma forma de representar a necessidade do usuário e a comparação entre as duas representações \cite{Goker2009}. 
+
+As palavras-chave são unidades textuais que servem para representar documentos, elas possuem a essência do documento, descrevendo de maneira clara e precisa o seu conteúdo. Neste trabalho palavras-chave representam tanto termos simples \emph{“influenza”} como termos compostos (\emph{keyphrases}) \emph{“influenza h1n1 virus”}. Os termos compostos são mais valorizados, pois são considerados como sendo mais informativos para descrever um documento \cite{Fagan1989}.
+
+Para determinar os temas principais sendo abordados em um conjunto de documentos, é preciso identificar cada documento com um conjunto de um ou mais descritores que reflitam os temas principais sendo abordados, tarefa da indexação automática.
+
+\section{Indexação automática}
+A indexação automática associa termos descritivos aos documentos de um conjunto através do programa de computador, no intuito de permitir a eficiente recuperação e armazenamento destes em um sistema informatizado \cite{Gonzalez2006}. O início da indexação automática se deu nos anos 50, naquela época a quantidade de informação guardada em computadores era limitada, logo não eram necessárias técnicas muito avançadas para organizá-la. Basicamente cada documento era indexado manualmente com alguns termos que o descreviam, e quando o usuário fazia um busca, os termos da busca eram comparados com os termos do documento e exibidos aqueles documentos que satisfaziam a igualdade de termos de busca para termos descritores. Mas a rotulação manual de cada documento exige um profissional especializado com conhecimento do domínio deste documento e tempo para identificar os descritores e provavelmente a quantidade de pessoal especializado em indexação de documentos não é suficiente para indexar com qualidade a crescente massa de documentos que vem surgindo.
+
+Uma ótima análise do processo de obtenção de descritores foi feita por Gonzalez et al. \cite{Gonzalez2006} e a seguir são abordados os seus principais pontos. Nem todos os termos existentes em um texto podem ser considerados descritivos, por isso existem diversas técnicas e abordagens para a obtenção de descritores para um documento. Mas quase todas as abordagens possuem uma fase em comum, a fase de pré processamento do texto. Nesta fase, o texto é preparado para a obtenção dos descritores, 
+
+RESOLVER !!!! e suas operações estão de acordo com a abordagem sendo adotada.
+
+ Geralmente o texto passa pela tokenização (identificação dos itens léxicos do texto), seleção dos descritores e conflação \cite{Yates1999}. Se a abordagem utilizada se utiliza de informações linguísticas, técnicas de processamento de linguagem natural podem ser usadas para determinar as relações morfo-sintáticas entre as palavras. Estas relações são obtidas através do \emph{part-of-speech tagging}, explicado adiante.
+
+Na fase de seleção de descritores ocorre a eliminação de \emph{stopwords}, que elimina palavras pouco representativas como preposições, artigos e conjunções. A eliminação destas palavras diminui a quantidade de possíveis descritores ganhando economia, mas por outro lado diminui a representatividade. Uma maneira de aproveitar estas palavras é apenas permiti-las como ligação entre palavras relevantes na análise morfo-sintática, gerando assim descritores mais representativos. Vale ressaltar que em alguns domínios existem palavras que podem ser consideradas \emph{stopwords}, mas em outros domínio não são. Um exemplo disso são palavras como remédio, doença, paciente, resultado e análise no domínio da medicina. Palavras assim tem pouco valor de indexação e recuperação, pois a maior parte dos documentos possui estes termos.
+
+Uma técnica muito utilizada para a representação de termos similares como sendo um só é a normalização, onde palavras com variações linguísticas são interpretadas como sendo a mesma palavra ou conceito. Utilizando a normalização, o cálculo de frequência pode ser ampliado para um determinado termo através da similaridade com outros termos do texto. A forma de normalização que é usada neste trabalho, é a conflação. Segundo \cite{Gonzalez2006} as formas de conflação mais usadas é o \emph{stemming} e a lematização. Um algoritmo de \emph{stemming} ou em português, radicalização, trunca as palavras para deixar apenas o radical desta palavra, permitindo assim remover plurais e sufixos que causam a variação de uma mesma palavra. Já a lematização reduz a palavra até sua forma canônica: \emph{lemma}(working) = work ; \emph{lemma}(worked) = work. A lematização possui resultados melhores, porém é mais difícil de ser aplicada, já que em alguns casos é necessário o uso de um dicionário para poder determinar o lema corretamente: \emph{lemma}(better) = good.
+
+Como mostrado no livro de \cite{Moens2000}, na indexação automática a seleção de descritores pode ser subdividida em duas abordagens. Na primeira, os termos são extraídos diretamente do texto através de um processo de filtragem afim de deixar apenas os termos mais descritivos. Na segunda abordagem, os termos são selecionados de um vocabulário controlado (\emph{thesaurus}), ou seja, atribuídos aos documentos. Um \emph{thesaurus} difere de um dicionário pelo fato de possuir relações entre palavras e sinônimos ao invés de definições, fornecendo assim agrupamentos de palavras com mesmo significado.
+ 
+\subsection{Extração de palavras-chave}
+A extração de termos não se baseia no uso de um vocabulário controlado para a seleção das palavras-chave para um documento, em vez disso, utiliza termos do próprio texto. Pode trabalhar usando abordagens léxicas, estatísticas ou híbridas para extrair descritores do texto de um documento.
+
+A abordagem léxica segue uma sequencia de passos pré definidos para a extração dos descritores de um texto:
+\begin{enumerate}
+    \item Análise léxica: nesta fase são determinadas as classes gramaticais de cada palavra de um frase, com estas informações pode-se decidir quais palavras podem ser importantes ou não. Um \emph{part-of-speech tagger} (POST) serve para fazer uma rotulação das palavras que compõem o texto, onde cada rótulo representa a classe gramatical de uma palavra.
+    \item Análise sintática: esta análise serve para gerar descritores compostos por mais de uma palavra, os descritores são criados baseado em padrões sintáticos definidos previamente. Uma máquina de estado é alimentada com os rótulos e trunca a frase em termos candidatos(\emph{chunking}).Geralmente os padrões sintáticos são montados para selecionar palavras-chave compostas por substantivos (\emph{noun chunking}), pois o substantivo é a classe gramatical que nomeia objetos, pessoas, substâncias, lugares e serve para identificar sobre o que se está discursando \cite{Gucker1966}.
+\end{enumerate}
+De todos os termos resultantes do processo de \emph{chunking} são selecionados os melhores descritores usando-se de alguma metodologia específica. Geralmente são calculados pesos para cada termo candidato e são selecionados aqueles que possuem maior peso.
+
+As técnicas estatísticas fazem cálculos para determinar a relevância de um termo em um texto e então decidir quais destes termos identificarão o documento. Alguns sistemas trabalham as relações de termos no conjunto de documentos total (\emph{corpus}) e outros se utilizam apenas do domínio de um documento, mas o que todos estes sistemas tem em comum é a utilização de \emph{corpus} de treinamento para criar modelos de predição que determinam se um termo é ou não relevante. \cite{Berry2010} afirmam que os sistemas que se utilizam de métodos orientados a \emph{corpus} geralmente trabalham com unigramas (palavra-chave de apenas uma palavra) o que limita a qualidade dos descritores por serem usados em múltiplos e diferentes contextos.
+
+Em uma abordagem híbrida são usadas ambas as técnicas citadas anteriormente buscando aproveitar as melhores qualidades de cada uma para se determinar descritores com uma maior qualidade. Neste trabalho utilizamos esta abordagem, primeiramente determinamos os possíveis descritores de um documento através da obtenção das classes gramaticais das palavras do texto utilizando o POST e em seguida extraímos \emph{noun chunks} utilizando padrões sintáticos. Para determinar quais destes termos são relevantes é utilizado um novo algoritmo que descobre a relação entre os termos candidatos fazendo um cruzamento de informações e determina as palavras-chave através de um peso que envolve a frequência de termos e o número de palavras que compõem uma palavra-chave.
+
+\subsubsection{Part of speech tagger (rotulador)}
+Para o processamento de linguagem natural utiliza-se a API LingPipe\footnote{\href{http://alias-i.com/lingpipe/}{http://alias-i.com/lingpipe/}} da Alias-i sob a licença \emph{Alias-i ROYALTY FREE LICENSE VERSION 1}. Uma API (\emph{Application Programming Interface}), também chamada de biblioteca, é um conjunto de códigos de uma determinada linguagem de programação que permitem ao utilizador desta, acelerar o seu processo de desenvolvimento através da reutilização destes códigos. Neste caso, a funcionalidade essencial é o rotulamento, que é implementado pela API utilizando HMM (\emph{Hidden Markov Model}, uma máquina de estados finitos. Foi mostrado que as cadeias de Markov são muito eficientes na extração de informação quando se trata de informação sensível ao contexto como texto em linguagem natural oferecendo equilíbrio entre simplicidade e expressividade de contexto\cite{Freitag2000}. As cadeias de Markov determinam a probabilidade da classe gramatical de uma palavra baseado na classe gramatical de outras palavras da frase.
+
+Como todo modelo estatístico, o rotulador necessita de um \emph{corpus} para ser treinado e neste caso é usado o MEDLINE corpus já que o domínio de linguagem é biomédico. Rotuladores desenvolvidos para textos gerais não funcionam bem quando aplicados ao MEDLINE. O rotulador de Brill \cite{Brill1992} aplicado a 1000 frases selecionadas aleatoriamente do MEDLINE, obteve uma exatidão de 86.8\% usando o conjunto de rótulos de \emph{Penn Treebank}. Esta baixa performance esta relacionada à especificidade do vocabulário do MEDLINE. O rotulador MedPost\cite{Smith2004} foi desenvolvido para satisfazer a necessidade de uma alta precisão no rotulamento treinado sobre o MEDLINE corpus. No teste de 1000 frases, ele obtêm exatidão de 97.43\% usando o conjunto de rótulos nativo.
+
+\subsection{Atribuição de palavras-chave}
+O método de atribuição de termos seleciona os descritores de um vocabulário controlado que melhor descrevem um documento. Uma maneira muito utilizada atualmente para a representação de domínios se chama ontologia, onde palavras-chave são utilizadas para representar conceitos.
+
+\subsubsection{Ontologias}
+
+ Segundo Gruber \cite{Gruber1993} uma ontologia é a especificação de um vocabulário para uma determinado domínio, definição de classe, relações, funções e outros objetos. Ela descreve formalmente um domínio e é composta por termos e o relacionamento entre estes \cite{Antoniou2004}. As ontologias são muito utilizadas nos campos de biologia e medicina, pois estas possuem uma grande quantidade de termos e relações entre eles. Tem sido feito muito esforço nas comunidades acadêmicas de vários países na pesquisa e desenvolvimento desta tecnologia. As principais ontologias na área de biomedicina atualmente são a \emph{Gene Ontology} (GO) \cite{GO2000} que faz um mapeamento semântico de genes e produtos genéticos como proteínas, \emph{Medical Subject Headings} (MeSH) \cite{MESH2000} utilizado pelo NCBI na indexação de documentos científicos e a \emph{Foundational Model of Anatomy}  (FMA) \cite{FMA2003} que é uma ontologia para representação de anatomia humana.
+
+\subsubsection{GoPubMed}
+
+Uma ferramenta que utiliza uma abordagem baseada em ontologias para organização dos resultados obtidos do PubMed é o GoPubMed\footnote{\href{http://www.gopubmed.com}{http://www.gopubmed.com}} \cite{Doms2005}, que utiliza o Gene Ontology e o MeSH. Este sistema divide as informações em quatro categorias principais (o que, quem, onde e quando) através das informações obtidas do PubMed e  permite o usuário restringir sua busca utilizando estes campos.
+
+\begin{enumerate}
+\item A categoria "o que", é processada utilizando-se dos resumos retornados a partir de uma busca à base de dados do PubMed e através de ontologias o sistema cria um árvore onde cada nível representa um tópico sendo abordado pelos artigos da pesquisa. O uso de ontologias permite a descrição de termos que são identificados na ontologia, descrevendo sinônimos e mostrando uma árvore de relacionamentos.
+
+\item Na categoria "quem", os artigos podem ser filtrados por autores e centros. Nesta categoria podem ser visualizados os dados das instituições e cientistas. O sistema leva em conta que um determinado autor publica sobre temas similares, com os mesmo co-autores e nas mesmas revistas, estas associações são mapeadas em uma rede semântica que determina a probabilidade de dois artigos serem escritos pela mesma pessoa.
+
+\item Em "onde", estão disponibilizadas as localizações de pessoas, universidades e centros de pesquisa, além disso são listadas também as melhores revistas (com alto fator de impacto).
+
+\item A categoria "quando", mostra os anos das publicações e permite selecionar a data de publicação para reduzir o número de artigos sendo exibidos.
+\end{enumerate}
+
+Neste trabalho não optamos pela utilização de ontologias, pois o vocabulário destas é controlado e deve ser constantemente atualizado. Alguns artigos não possuem termos MeSH por serem inovadores ou antigos. As palavras-chave retiradas diretamente do resumo e título são mais representativas e mais descritivas para um determinado artigo do que termos predefinidos.
+
+\section{Sistemas de refinamento}
+
+A seguir são apresentados alguns trabalhos de sistemas que permitem a categorização de artigos retornados a partir de uma busca do PubMed. Como se pode perceber existem diversas abordagens para o agrupamento de artigos similares, mas poucos dos trabalhos pesquisados fazem a utilização de um algoritmo próprio de extração de palavras-chave para classificar documentos. \cite{Maron1958} tiveram a ideia de organizar os documentos baseando-se em uma probabilidade de relevância. Os termos de busca inseridos pelo usuário eram processados pelo teorema de Bayes e era determinada a probabilidade de cada documento ser relevante para o usuário. A vantagem desta abordagem era eliminar a busca booleana que é ineficiente quanto à seleção de documentos relevantes.
+
+\subsection{XplorMed}
+A ferramenta XplorMed de \cite{Perez-Iratxeta2001} é uma das primeiras a propor uma maneira de melhorar a busca por artigos relevantes no PubMed e se utiliza de cálculos aritméticos simples para criar relacionamentos entre palavras nos resumos e, assim, identificar palavras-chave. Neste sistema, a relação entre palavras é criada utilizando lógica fuzzy onde há um relacionamento entre duas palavras \emph{x} e \emph{y} medido por um valor entre 0 e 1. O valor é medido pela seguinte equação:
+
+\begin{centering}
+\textbf{
+núm. de resumos que contém \emph{x} e \emph{y} / núm. total de resumos que contém \emph{x} ou \emph{y}
+}
+\end{centering}
+
+O grau de inclusão mostra que palavras mais gerais incluem palavras mais especificas, a inclusão de \emph{x} em \emph{y} é:
+
+\begin{centering}
+\textbf{
+núm. de resumos que contém \emph{x} e \emph{y} / núm. total de resumos que contém \emph{x}
+}
+\end{centering}
+
+Palavras importantes são aquelas que possuem um alto valor associativo, valor que é calculado pelo somatório do grau de inclusão de todas as palavras que são relacionadas à palavra em questão. O problema desta abordagem é que ela restringe o relacionamento entre palavras a apenas duas palavras. O usuário do sistema pode restringir sua busca navegando pelos relacionamentos das palavras geradas e assim reduzir o número de artigos sendo exibidos. Também, é possível visualizar as frases que possuem uma determinada relação. O processo é iterativo e pode gerar uma cadeia de palavras, ou seja, a cada redução do conjunto de resultados é feita uma nova análise do relacionamento entre as palavras.
+
+Para avaliar a capacidade de melhorar a precisão de resultados efetuados no PubMed, foram selecionadas 4 revisões. Foram selecionadas cuidadosamente palavras-chave que representassem a revisão e foi feita uma busca no PubMed, a precisão foi calculada com os artigos retornados pelo PubMed e os artigos contidos na revisão sendo analisada. Utilizando uma cadeia de palavras-chaves geradas pelo XplorMed se chegou à uma precisão mais elevada (0.034 -> 0.092 em um dos artigos). A precisão é a divisão do número de documentos relevantes pelo número total de documentos retornados.
+
+\subsection{Anne O`Tate}
+Um trabalho similar com o que está sendo proposto é o Anne O`Tate, publicado por \cite{Smalheiser2008}. Neste trabalho é descrita uma aplicação que facilita o processo de busca e navegação para um usuário do PubMed. Os artigos podem ser analisados sob diversos pontos de vista, como por exemplo palavras mais importantes de resumo e títulos, tópicos e autores. Ao clicar em um destes itens, os artigos são filtrados e exibidos aqueles que satisfazem as condições dos filtros selecionados. Também é implementado um algoritmo de agrupamento de artigos por categorias que permite a distribuição de artigos em tópicos em comum.
+
+Os termos extraídos dos artigos do PubMed são guardados em um banco de dados e são atribuídos às categorias semânticas do \emph{Unified Medical Language System}(UMLS) através do programa \emph{MetaMap}\footnote{\href{http://metamap.nlm.nih.gov/}{http://metamap.nlm.nih.gov/}} do \emph{National Library of Medicine} (NLM). Este programa faz o mapeamento de textos da área de biomedicina para um tesauro do UMLS que  possui categorias pré-definidas. Estas categorias são usadas como palavras-chave para referenciar os assuntos principais sendo abordados em um artigo. Os artigos exibidos pelo Anne O`Tate podem ser filtrados através destas categorias.
+
+Outra funcionalidade interessante é a expansão de literatura que ocorre quando o número de artigos sendo exibidos para o usuário é menor do que cinquenta. O sistema busca artigos com temas similares utilizando o sistema de artigos relacionados do PubMed. Os artigos relacionados são selecionados apenas se forem relacionados com mais de 40\% dos artigos originais.
+
+Para dar uma visão geral dos artigos retornados a partir de uma busca, é utilizada a função de categorização por tópicos. Esta função utiliza os termos MeSH para dividir os artigos em áreas afins. Artigos recentes e antigos não possuem termos MeSH e são colocados em categorias "Muito recentes" e "Não indexados" respectivamente, os outros artigos são categorizados em não mais do que 15 categorias MeSH utilizando um algoritmo de agrupamento.
+
+A ferramenta Anne O`Tate implementa diversas funcionalidades interessantes como agrupamento de artigos por tópicos e organização por autores e ano, dando a possibilidade do pesquisador encontrar material relevante sem a necessidade de modificar o termo de busca do PubMed. Fato notável é que esta ferramenta tem a capacidade de processar até 25.000 artigos e distribuí-los em categorias em um tempo aceitável para um sistema \emph{Web}.
+
+A maioria dos sistemas que foram estudados utilizam-se dos dados do PubMed para fazer o agrupamento de artigos em sub-tópicos, a utilização de campos como datas de publicação, autores e localidades são óbvias. A divergência entre estes sistemas está relacionada às técnicas e os algoritmos usados para determinar os sub-domínios em grupos de artigos retornados a partir do PubMed. Muitos dos sistemas utilizam-se de ontologias para atribuir descritores aos artigos como o GoPubMed \cite{Doms2005}, PubReMiner \footnote{\href{http://bioinfo.amc.uva.nl/human-genetics/pubreminer/}{http://bioinfo.amc.uva.nl/human-genetics/pubreminer/}} e PubMedAssistant \cite{Ding2006}, sistemas como os de  XplorMed \cite{Perez-Iratxeta2001} e BioIE \cite{Divoli2005} extraem relacionamentos entre as palavras contidas em resumos e títulos para representar e agrupar artigos similares e ainda existem sistemas que mostram artigos relacionados e artigos ordenados por relevância como em HubMed \cite{Eaton2006} e Relemed \cite{Siadaty2007} respectivamente.
+
+O sistema apresentando neste trabalho utiliza uma abordagem diferente para o agrupamento de artigos, através do processamento de linguagem natural são extraídos possíveis descritores para os artigos e estes por sua vez passam por um processo para detectar os mais descritivos. Essa abordagem fornece descritores independentes de vocabulários controlados como o MeSH ou GO, resultando em conceitos mais genuínos para um determinado artigo. Utilizando estes conceitos extraídos localmente, são obtidos os conceitos globais que descrevem temas em comum.
+
+\section{Métricas de avaliação}
+Para avaliar a qualidade dos resultados obtidos em um sistema de RI são utilizadas métricas que fazem comparações dos resultados obtidos por um sistema com os resultados que se esperam deste sistema. Basicamente são operações matemáticas de conjuntos que revelam valores percentuais de um determinado aspecto do sistema. As duas métricas mais conhecidas e bem aceitas na comunidade de RI são o \emph{recall} e o \emph{precision} \cite{Turpin2006}.
+
+O \emph{recall} serve para representar a quantidade de documentos relevantes que foram recuperados, não levando em conta os documentos irrelevantes que também foram recuperados.
+\\
+\begin{center}
+\textbf{
+recall = (núm. de documentos corretamente recuperados) / (núm. total de documentos relevantes)
+}
+\end{center}
+
+\emph{Precision} avalia o que o \emph{recall} não leva em conta, verificando quantos dos documentos recuperados são relevantes.
+\begin{center}
+\textbf{
+precision = (núm. de documentos corretamente recuperados) / (núm. total de documentos recuperados)
+}
+\end{center}
+
+O número de palavras-chave corretamente extraídas na avaliação justa é feito calculando o somatório dos pesos, assim se temos duas correspondências exatas (1) e uma de Sufixo Classe 1 (0.9) e uma de Prefixo Classe 2 (0.5), o número de correspondências corretas é 3.4. Cada correspondência fica entre 0 e 1.
+
+A \emph{F1-measure} é uma métrica que expressa a média balanceada entre o \emph{recall} e o \emph{precision} \cite{Feldman2007}.
+\begin{center}
+\textbf{
+\emph{F1-measuere} = 2 / ( (1 / \emph{recall}) + (1 / \emph{precision}))
+}
+\end{center}
+
+COMO SERÁ APRESENTADO NOS PRÓXIMOS CAPÍTULOS
+

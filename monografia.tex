@@ -25,9 +25,11 @@
 
 \lstset{
     basicstyle=\ttfamily,
+    breaklines=true,
     language=Java,
     columns=flexible,
     numberbychapter=false,
+    captionpos=b,
     showstringspaces=false,
     stringstyle=\color{red}\textit,
     keywordstyle=\color{blue}\textbf,
@@ -36,13 +38,13 @@
     numberstyle=\ttfamily\footnotesize,
     stepnumber=1,
     numbersep=10pt,
-    keywords={class, pass, in, for, while, if, is, elif, else, not, and, or, def, print, exec, break, continue, return, assert, from, import, with, as, require, end, do},
+    keywords={class, for, while, if, else, and, or, break, continue, return, assert, import, do, true, false, try, catch, throws, private, public, void, int, float, double, byte, short, char},
     emph={ABSTRACT,MESH_TERMS,PMID,TITLE,AUTHOR_NAMES,JOURNAL_TITLE,PUB_YEAR,AUTHOR_KWS,AUTHOR},
     emph={[2]Funcionalidade, Como, Eu, E, quero, Para, Cenario, Dado, Quando, Entao, should, should_not, @matcher, context, it, describe, expect, to, world, @step, step, assert_equal, fail, expect, to_not, raise_error},
     emphstyle=[2]\color{MidnightBlue}\textbf,
     frame=none,
 }
-
+\renewcommand{\lstlistingname}{Listagem}
 
 
 %--------------------------------- Informações ---------------------------------
@@ -65,6 +67,7 @@
     \include{tex/introducao}
     \include{tex/aspectos_teoricos_e_trabalhos_relacionados}
     \include{tex/biosearchrefinement}
+    \include{tex/resultados}
     \citeoption{abnt-repeated-author-omit=yes}
     \bibliographystyle{abnt-alf}
     \bibliography{bibliografia}

@@ -1,0 +1,96 @@
+\chapter{Resultados}
+
+Neste capítulo são apresentados os resultados para a biblioteca \emph{PubMed Dataset}, o algoritmo de sumarização \emph{Extraction Engine} e o sistema \emph{BioSearch Refinement}. Os dados utilizados na analise do \emph{PubMed Dataset}, foram utilizados para avaliar o \emph{Extraction Engine} com uma perspectiva diferente.
+
+\section{Resultados do \emph{PubMed Dataset}}
+Para a criação dos conjuntos de dados primeiramente foram definidos os termos de busca, o
+número máximo de artigos a ser buscado e em seguida foram definidos os atributos dos artigos
+que seriam necessários nos conjunto de dados. Cada artigo necessita conter o resumo que será
+utilizado para a obtenção das palavras chave geradas pelo algoritmo e também das palavras
+chave definidas pelos autores, pois estas são a referência da comparação com as palavras
+automaticamente extraídas pelo \emph{Extraction Engine}.
+
+Existem dois tipos de palavras-chave usadas na base de dados do PubMed: os termos de
+indexação MeSH e as palavras-chave fornecidas pelos autores do artigo. Os experimentos foram
+realizados utilizando como referência os termos MeSH, pois se encontraram poucos artigos com
+palavras-chave dos autores.
+
+A biblioteca foi avaliada sob os seguintes aspectos: facilidade de uso (linhas de código para executar a tarefa desejada) e performance (tempo de execução). O objeto de estudo foi a criação de dois conjuntos de dados que seriam utilizados para analisar o \emph{Extraction Engine}, mostrados na Tabela \ref{tab:datasets}.
+
+
+\begin{table}[htbp]
+\center
+\begin{tabular}{|l|l|}
+\hline
+\multicolumn{ 2}{|c|}{\textbf{Conjunto de dados 1}} \\ \hline
+Termo de busca & \textit{mycobacterium tuberculosis} \\ \hline
+Número de artigos solicitados & \multicolumn{1}{r|}{10000} \\ \hline
+Número de artigos recuperados & \multicolumn{1}{r|}{8045} \\ \hline
+\multicolumn{ 2}{|c|}{\textbf{Conjunto de dados 2}} \\ \hline
+Termo de busca & \textit{h1n1 influenza virus} \\ \hline
+Número de artigos solicitados & \multicolumn{1}{r|}{5000} \\ \hline
+Número de artigos recuperados & \multicolumn{1}{r|}{2858} \\ \hline
+\end{tabular}
+\caption{Conjuntos de dados criado com o PubMed Dataset}
+\label{tab:datasets}
+\end{table}
+
+Para a criação de um conjunto de dados (\emph{dataset}), são necessárias no mínimo 5 linhas de código. O método da Listagem \ref{lst:datasetCreation} recebe o termo de busca e o número de artigos a ser buscado, em seguida, é criada a configuração de \emph{download} com os atributos necessários e o $ArticleDownloader$ com esta configuração. Os atributos são configurados como obrigatórios, ou seja, todos os artigos devem possuir os atributos solicitados e então é feito o \emph{download} dos artigos. Finalmente os artigos são passados para o serializador que os salva em disco com o nome do termo para identificação.
+
+\lstset{caption={Criação de um \emph{DataSet}},label=lst:datasetCreation}
+\begin{lstlisting}
+public void criarDataSet(String termo, int quantidade) throws IOException{
+    DownloadConfiguration config = new DownloadConfiguration(PMID,ABSTRACT,MESH_TERMS);
+    ArticleDownloader downloader = new ArticleDownloader(config);
+    downloader.setMandatoryAttributes(true);
+    List<DynaArticle> downloadedArticles = downloader.getDynaArticles(termo, quantidade);
+    DataSet conceptDS = new ConceptDataSet(articles, "mycobacterium tuberculosis");
+    DataSetSerializer.serializeDataSet(conceptDS, termo);
+}
+\end{lstlisting}
+
+Após a criação dos conjuntos de dados, foram executadas duas rotinas implementadas na classe $ConceptDataSet$ que estende $DataSet$. A primeira ($removeSearchTermFromData()$), remove o termo de busca dos conjuntos de palavras-chave geradas e termos MeSH, pois são irrelevantes para o pesquisador já que ele as usou como termo de busca. A segunda rotina ($intersectKws_Abstract$) desconsidera os termos MeSH que não estão no texto do resumo, pois como o algoritmo avaliado é de extração, só se pode comparar palavras chave extraídas com palavras do próprio resumo.
+
+Como pode-se perceber, a quantidade de artigos recuperados difere da quantidade solicitada. Alguns dos motivos que causaram a redução do número de artigos nos conjuntos de dados foram: alguns artigos no PubMed não possuem os atributos solicitados na configuração de \emph{download}. As rotinas descritas no parágrafo acima causam a exclusão de alguns artigos, quando estes ficam sem palavras-chave geradas ou termos MeSH.
+
+\subsection{Discussão dos resultados do \emph{PubMed Dataset}}
+
+Com a utilização da ferramenta, a construção dos conjuntos de dados aconteceu de maneira
+rápida e fácil, bastando apenas especificar os parâmetros iniciais. A utilização do conjunto de
+dados se torna muito flexível, pois os seus dados podem ser alterados e gravados novamente,
+seja para atualizar as palavras-chave geradas ou algum outro parâmetro.
+
+A partir da Tabela \ref{tab:tempoExecucao}, pode-se observar que, apesar do tempo para download ter sido
+consideravelmente grande para 10.000 artigos, esta fase só é executada uma vez, pois o
+conjunto de dados é gravado em disco após a execução e sempre vai ser dependente do tráfego
+na rede. Pode-se ver que o tempo levado para carregar o conjunto de dados é muito pequeno,
+tornando sua utilização muito conveniente para testes. A quantidade de artigos recuperados
+varia muito de acordo com os atributos que foram especificados pelo usuário, quanto maior o
+numero destes, menos artigos serão recuperados, pois menor será a probabilidade de um artigo
+possuir todos os atributos solicitados. A qualidade dos dados recuperados dependerá do que for
+disponibilizado no PubMed, pois os conjuntos de dados criados são uma reflexão dos dados
+contidos no banco de dados de origem.
+
+\begin{table}[htbp]
+\center
+\begin{tabular}{|l|l|l|}
+\hline
+\textbf{Conjunto de dados} & \textbf{Etapas} & \textbf{Tempo de execução} \\ \hline
+\multicolumn{ 1}{|c|}{\textbf{1}} & \textit{Download} & 7,45 minutos \\ \cline{ 2- 3}
+\multicolumn{ 1}{|l|}{} & Serialização & 2 segundos \\ \cline{ 2- 3}
+\multicolumn{ 1}{|l|}{} & Desserialização & 3 segundos \\ \hline
+\multicolumn{ 1}{|c|}{\textbf{2}} & \textit{Download} & 3,11 minutos \\ \cline{ 2- 3}
+\multicolumn{ 1}{|l|}{} & Serialização & 859 milissegundos \\ \cline{ 2- 3}
+\multicolumn{ 1}{|l|}{} & Desserialização & 1 segundo \\ \hline
+\end{tabular}
+\caption{Desempenho da ferramenta PubMed Dataset na construção dos conjuntos de dados}
+\label{tab:tempoExecucao}
+\end{table}
+
+Em um ambiente de teste e avaliação, os testes são criados progressivamente e muitas vezes são adicionados casos de teste mais específicos. Dado esse cenário, é óbvio o fato de que os testes são executados diversas vezes. Sem a utilização desta biblioteca, o tempo gasto para a criação dos dados de teste e execução dos testes propriamente ditos levariam um tempo
+considerável. Como podemos observar na Tabela \ref{tab:tempoExecucao}, o tempo gasto para o download dos dados é muito grande e também devemos ressaltar que a consistência do conjunto de dados não é garantida visto que os dados retornados pelo PubMed podem variar com o passar do tempo.
+
+\section{Resultados do \emph{Extraction Engine}}
+
+O ponto crucial do \emph{Extraction Engine} é extrair descritores válidos para cada artigo, pois se os descritores selecionados localmente são de qualidade, a sumarização dos artigos no processo global será eficiente. 
+
