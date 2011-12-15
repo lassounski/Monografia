@@ -14,8 +14,8 @@ A interação com o sistema é dada da seguinte maneira:
 \begin{enumerate}
     \item O usuário interage com aplicação fornecendo o termo de busca.
     \item O termo buscado é passado para o \emph{PubMed Dataset}  que faz a comunicação com o PubMed.
-    \item Os 50 primeiros artigos mais recentes são exibidos na tela para que o usuário possa navegar. Um mecanismo de paginação é implementado, para que a aplicação seja leve e funcione com rapidez. Mais artigos poderão ser carregados se o usuário fizer uma requisição para exibir outra página.
-    \item Para executar o algoritmo de extração de palavras-chave (\emph{Extraction Engine}) o usuário clica em um botão "\emph{Generate keywords}".
+    \item Os 20 primeiros artigos mais recentes são exibidos na tela para que o usuário possa navegar. Um mecanismo de paginação é implementado, para que a aplicação seja leve e funcione com rapidez. Mais artigos poderão ser carregados se o usuário fizer uma requisição para exibir outra página.
+    \item Para executar o algoritmo de extração de palavras-chave (\emph{Extraction Engine}) o usuário clica em um botão "\emph{Generate keywords}", mostrada na Figura \ref{fig:telaComBusca}.
     \item Ao finalizar o processamento, as palavras-chave mais relevantes aparecem para o usuário permitindo a filtragem dos artigos exibidos.
     \item Ao clicar em uma das palavras-chave, uma nova aba é aberta dentro da \emph{interface} do sistema. Nesta aba são exibidos os artigos relacionados com aquela palavra-chave e são geradas novas palavras-chave para aquele conjunto de artigos.
 \end{enumerate}
@@ -47,7 +47,7 @@ Na Figura \ref{fig:telaComBusca}, a aba foi aberta com o termo de busca solicita
 
 Ao clicar no botão ''\emph{Generate keywords}'', o algoritmo \emph{Extraction Engine} é chamado para gerar as palavras-chave nos artigos que estão em \emph{cache}. Na Figura \ref{fig:palavrasChave} são mostradas as palavras-chave geradas para os artigos mostrados na figura anterior. Ao clicar em uma palavra-chave, uma nova aba será aberta. O título desta aba será o título da aba anterior concatenado com a palavra-chave selecionada, no exemplo da figura seria ''\emph{mycobacterium avium virulence genotype / mycobacterium avium subsp}''.
 
-Existem dois tipo de abas no sistema, o primeiro se chama $LoadingTab$, esta aba representa o termo de busca inicial e implementa a paginação de artigos. A outra aba é a $OpenedTab$, gerada a partir de uma $LoadingTab$ e serve para mostrar os artigos refinados. Quando o usuário clica em uma palavra-chave, é aberta uma $OpenedTab$, e nesta aba as palavras-chave são recalculadas usando o \emph{Extraction Engine}. O processo de abertura de abas e processamento de palavras-chave é recursivo. 
+Existem dois tipos de abas no sistema, o primeiro se chama $LoadingTab$, esta aba representa o termo de busca inicial e implementa a paginação de artigos. A outra aba é a $OpenedTab$, gerada a partir de uma $LoadingTab$ e serve para mostrar os artigos refinados. Quando o usuário clica em uma palavra-chave, é aberta uma $OpenedTab$, e nesta aba as palavras-chave são recalculadas usando o \emph{Extraction Engine}. O processo de abertura de abas e processamento de palavras-chave é recursivo. 
 
 As palavras-chave passam também por um processo de filtragem. Por exemplo, os termos que compõem o título da $LoadingTab$ da Figura \ref{fig:telaComBusca} (\emph{mycobacterium},\emph{avium},\emph{virulence},\emph{genotype}) são guardados em uma lista de \emph{stop words}. Se os termos da palavra-chave gerada pelo algoritmo \emph{Extraction Engine} estiverem na lista de \emph{stop words}, esta palavra-chave não será exibida, pois ela é irrelevante para o usuário. Ao abrir uma aba, a lista é incrementada com os termos da palavra-chave selecionada.
 
