@@ -15,7 +15,7 @@ A interação com o sistema é dada da seguinte maneira:
     \item O usuário interage com aplicação fornecendo o termo de busca.
     \item O termo buscado é passado para o \emph{PubMed Dataset}  que faz a comunicação com o PubMed.
     \item Os 20 primeiros artigos mais recentes são exibidos na tela para que o usuário possa navegar. Um mecanismo de paginação é implementado, para que a aplicação seja leve e funcione com rapidez. Mais artigos poderão ser carregados se o usuário fizer uma requisição para exibir outra página.
-    \item Para executar o algoritmo de extração de palavras-chave (\emph{Extraction Engine}) o usuário clica em um botão "\emph{Generate keywords}", mostrada na Figura \ref{fig:telaComBusca}.
+    \item Para executar o algoritmo de extração de palavras-chave (\emph{Extraction Engine}) o usuário clica em um botão "\emph{Generate keywords}", mostrado na Figura \ref{fig:telaComBusca}.
     \item Ao finalizar o processamento, as palavras-chave mais relevantes aparecem para o usuário permitindo a filtragem dos artigos exibidos.
     \item Ao clicar em uma das palavras-chave, uma nova aba é aberta dentro da \emph{interface} do sistema. Nesta aba são exibidos os artigos relacionados com aquela palavra-chave e são geradas novas palavras-chave para aquele conjunto de artigos.
 \end{enumerate}
@@ -61,7 +61,7 @@ As palavras-chave passam também por um processo de filtragem. Por exemplo, os t
 
 Para avaliar o \emph{BioSearch Refinement} quanto à qualidade de suas predições e obter estatísticas importantes sobre os artigos do PubMed, é necessário um conjunto de programas que possibilitem a gestão destas informações. O \emph{PubMed Dataset} é uma API desenvolvida para a criação de conjuntos de dados teste com os artigos do PubMed, e também, serve como ponto de acesso ao PubMed no sistema \emph{BioSearch Refinement}. 
 
-O objetivo principal do \emph{PubMed Dataset} é oferecer ao programador de um sistema de RI o acesso aos dados do PubMed através do E-Utils \cite{Eutils2010} e a capacidade de gravar e ler estes dados do disco através de um programa Java. Isto é feito através de conjuntos de dados \emph{datasets} que são salvos em disco através de serialização (uma técnica de persistência para objetos). Um conjunto de dados é constituído de artigos científicos que são recuperados do PubMed utilizando um termo de busca e uma configuração de \emph{download}.
+O objetivo principal do \emph{PubMed Dataset} é oferecer ao programador de um sistema de R.I. o acesso aos dados do PubMed através do E-Utils \cite{Eutils2010} e a capacidade de gravar e ler estes dados do disco através de um programa Java. Isto é feito através de conjuntos de dados \emph{datasets} que são salvos em disco através de serialização (uma técnica de persistência para objetos). Um conjunto de dados é constituído de artigos científicos que são recuperados do PubMed utilizando um termo de busca e uma configuração de \emph{download}.
 
 \subsection{E-Utils}
 O E-Utils é um \emph{Web Service} composto por um conjunto de programas que utilizam URL`s para fazer requisições e retornam dados em diversos formatos com HTML ou XML. Dentre estes programas, existem o E-Search, utilizado para fazer buscas e o E-Fetch para recuperar os dados. O arquivo estruturado XML do PubMed atende o padrão DTD do NLM Journal Archiving and Interchange, disponibilizado pelo NLM. O objetivo foi fornecer um formato comum que permitisse o intercâmbio de informação. Foram criados vários conjuntos de \emph{tags}, cada um com um propósito. Mas vale ressaltar que nem todos os artigos possuem todas as \emph{tags}, fato que deve cuidadosamente tratado com mecanismo de exceções. Dentre os elementos de um XML estão os seguintes elementos:
@@ -191,7 +191,7 @@ O processo de conceitualização se inicia com a criação de uma estrutura de a
 \begin{itemize}
     \item Peso ($weight$): representa a interação das partes de outros conceitos com este conceito, um processo de cruzamento de informações explicado adiante.
     \item Raiz da parte ($partStem$): a raiz da palavra que compõe esta parte para a comparação com outras partes.
-    \item Mapa de frequência de ocorrência ($partWords$): usado para contar as frequências das diferentes palavras que em algum momento fizeram parte deste 0conceito.
+    \item Mapa de frequência de ocorrência ($partWords$): usado para contar as frequências das diferentes palavras que em algum momento fizeram parte deste conceito.
 \end{itemize}
 
 \begin{figure}[h!]

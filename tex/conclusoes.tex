@@ -1,0 +1,49 @@
+\chapter{Conclusões}
+
+Todos os objetivos definidos no início do projeto foram atingidos, resultando em um sistema funcional e eficiente. A seguir são dadas as conclusões finais sobre o sistema e suas partes, como também, são apresentadas as contribuições e trabalhos futuros.
+
+\section{\emph{PubMed Dataset}}
+O \emph{PubMed Dataset} se mostrou uma ótima ferramenta para a criação de conjunto de dados de teste, facilitando em grande parte o processo de avaliação do algoritmo de extração. O módulo de \emph{download} que realiza a conexão com os servidores do NCBI foi projetado de maneira que seja flexível, possibilitando a adição de novos parâmetros com algumas linhas de código.
+
+O tempo levado para carregar e escrever os \emph{datasets} para a memória é de alguns segundos, sendo muito útil em baterias de teste. Já o tempo levado para obter os artigos depende de diversos fatores independentes da biblioteca, como condição de carga do banco de dados do PubMed e velocidade de conexão do usuário.
+
+Por ser código aberto, pode ser aprimorado pela comunidade de bioinformática para ser uma biblioteca ainda mais funcional. O projeto se encontra no repositório Git do GitHub no endereço \url{https://github.com/lassounski/PubMed-Dataset} ou em formato .jar no repositório Maven. A dependência e o repositório que devem ser adicionados podem ser vistos nas Listagens 3 e 4.
+\lstset{caption={Dependência Maven},label=lst:pmdDependecy}
+\begin{lstlisting}
+<dependency>
+    <groupId>com.uenf</groupId>
+    <artifactId>PubMedDataset</artifactId>
+    <version>1.0-SNAPSHOT</version>
+</dependency>
+\end{lstlisting}
+\lstset{caption={Repositório Maven},label=lst:pmdRepository}
+\begin{lstlisting}
+<repository>
+    <id>lassounski-snapshots</id>
+    <url>https://github.com/lassounski/mvn-repo/raw/master/snapshots</url>
+</repository>
+\end{lstlisting}
+
+A utilização do \emph{PubMed Dataset} no \emph{BioSearch Refinement} se mostrou muito útil, já que os artigos exibidos no sistema são obtidos usando a ferramenta. O tempo levado pela aplicação para exibir as páginas de artigos é aceitável, sendo um pouco maior do que o tempo levado pelo próprio NCBI.
+
+\section{\emph{Extraction Engine}}
+
+O algoritmo de extração de palavras-chave obteve bons resultados possuindo um \emph{recall} em torno de 70\%, ou seja, dos termos MeSH atribuídos aos artigos que existem no texto, 70\% foram recuperados pelo algoritmo.
+
+As palavras-chave exibidas para o usuário destacam os assuntos mais abordados pelos artigos e representam sub-conjuntos do original, que podem ajudar no processo de busca. Uma expansão no algoritmo poderia permitir que o usuário navegue pelas palavras-chave através de um modelo de hierarquia, onde palavras-chave mais gerais contem palavras-chave mais específicas.
+
+Vale notar que o \emph{Extraction Engine} pode ser usado para outras áreas de aplicação diferentes da biomedicina. O que tem de ser modificado para que o algoritmo se adapte à uma determinada área de conhecimento é o seu \emph{part of speech tagger} que vai determinar as classes gramaticais das palavras.
+
+\section{\emph{BioSearch Refinement}}
+
+O sistema desenvolvido possui uma \emph{interface} enriquecida com componentes visuais animados que favorecem a usabilidade, a navegação por abas facilita a organização da informação do usuário. O tempo de resposta da aplicação é aceitável, mas pode ser melhorado com técnicas de otimização.
+
+\section{Contribuições}
+O resultado do trabalho desenvolvido é de código aberto e é disponibilizado para utilização e/ou modificação, melhoramentos podem ser submetidos para a origem e serão avaliadas. Tanto a biblioteca \emph{PubMed Dataset} como o sistema \emph{BioSearch Refinement} podem ser encontrados no GitHub em \url{https://github.com/lassounski/PubMed-Dataset} e \url{https://github.com/lassounski/BioSearch-Refinement}.
+
+O \emph{PubMed Dataset} foi apresentado e publicado no BIOINFORMATICS 2012 (\emph{International Conference on Bioinformatics Models, Methods and Algorithms}). E o \emph{BioSearch Refinement} foi aceito para publicação na Conferência IADIS Ibero Americana de 2011.
+
+\section{Trabalhos futuros}
+As perspectivas de trabalhos futuros por parte do \emph{Extraction Engine} visam uma mudança na arquitetura do algoritmo para permitir a categorização de conceitos por hierarquias. Mesmo conceitos diferentes como "platelets flow",\ "platelet",\ "platelet plasma"\ e "platelets expression", possuem
+ "platelet" \ como conceito mestre. Este conceito estaria na raiz da árvore como conceito pai e os outros conceitos seriam englobados nestes como filhos. Um determinado conceito poderia ser filho de n conceitos pais e poderia ter m filhos, a relevância de um conceito na árvore seria representada pelo seu número de partes, número de filhos e frequência de ocorrência das partes similares.
+ 

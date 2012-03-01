@@ -1,21 +1,13 @@
 \chapter{Resultados e discussões}
 
-Neste capítulo são apresentados os resultados para a biblioteca \emph{PubMed Dataset}, o algoritmo de sumarização \emph{Extraction Engine} e o sistema \emph{BioSearch Refinement}. Os dados utilizados na analise do \emph{PubMed Dataset}, foram utilizados para avaliar o \emph{Extraction Engine} com uma perspectiva diferente.
+Neste capítulo são apresentados os resultados para a biblioteca \emph{PubMed Dataset}, o algoritmo de sumarização \emph{Extraction Engine} e o sistema \emph{BioSearch Refinement}. 
 
 \section{Resultados do \emph{PubMed Dataset}}
 Para a criação dos conjuntos de dados primeiramente foram definidos os termos de busca, o
 número máximo de artigos a ser buscado e em seguida foram definidos os atributos dos artigos
-que seriam necessários nos conjunto de dados. Cada artigo necessita conter o resumo que será
-utilizado para a obtenção das palavras chave geradas pelo algoritmo e também das palavras
-chave definidas pelos autores, pois estas são a referência da comparação com as palavras
-automaticamente extraídas pelo \emph{Extraction Engine}.
+que seriam necessários nos conjunto de dados.
 
-Existem dois tipos de palavras-chave usadas na base de dados do PubMed: os termos de
-indexação MeSH e as palavras-chave fornecidas pelos autores do artigo. Os experimentos foram
-realizados utilizando como referência os termos MeSH, pois se encontraram poucos artigos com
-palavras-chave dos autores.
-
-A biblioteca foi avaliada sob os seguintes aspectos: facilidade de uso (linhas de código para executar a tarefa desejada) e performance (tempo de execução). O objeto de estudo foi a criação de dois conjuntos de dados que seriam utilizados para analisar o \emph{Extraction Engine}, mostrados na Tabela \ref{tab:datasets}.
+A biblioteca foi avaliada sob os seguintes aspectos: facilidade de uso (linhas de código para executar a tarefa desejada) e performance (tempo de execução). Foram criados dois conjuntos de dados de teste, mostrados na Tabela \ref{tab:datasets}.
 
 
 \begin{table}[htbp]
@@ -35,10 +27,14 @@ Número de artigos recuperados & \multicolumn{1}{r|}{2858} \\ \hline
 \label{tab:datasets}
 \end{table}
 
+Como pode-se perceber, a quantidade de artigos recuperados difere da quantidade solicitada. O motivo que causou a redução do número de artigos nos conjuntos de dados foi que alguns dos artigos no PubMed não possuem os atributos solicitados na configuração de \emph{download}. 
+
 Para a criação de um conjunto de dados (\emph{dataset}), são necessárias no mínimo 5 linhas de código. O método da Listagem \ref{lst:datasetCreation} recebe o termo de busca e o número de artigos a ser buscado, em seguida, é criada a configuração de \emph{download} com os atributos necessários e o $ArticleDownloader$ com esta configuração. Os atributos são configurados como obrigatórios, ou seja, todos os artigos devem possuir os atributos solicitados e então é feito o \emph{download} dos artigos. Finalmente os artigos são passados para o serializador que os salva em disco com o nome do termo para identificação.
 
 \lstset{caption={Criação de um \emph{DataSet}},label=lst:datasetCreation}
 \begin{lstlisting}
+import static com.uenf.pubmeddataset.internet.ParameterName.*;
+
 public void criarDataSet(String termo, int quantidade) throws IOException{
     DownloadConfiguration config = new DownloadConfiguration(PMID,ABSTRACT,MESH_TERMS);
     ArticleDownloader downloader = new ArticleDownloader(config);
@@ -48,10 +44,6 @@ public void criarDataSet(String termo, int quantidade) throws IOException{
     DataSetSerializer.serializeDataSet(conceptDS, termo);
 }
 \end{lstlisting}
-
-Após a criação dos conjuntos de dados, foram executadas duas rotinas implementadas na classe $ConceptDataSet$ que estende $DataSet$. A primeira ($removeSearchTermFromData()$), remove o termo de busca dos conjuntos de palavras-chave geradas e termos MeSH, pois são irrelevantes para o pesquisador já que ele as usou como termo de busca. A segunda rotina ($intersectKws\_Abstract$) desconsidera os termos MeSH que não estão no texto do resumo, pois como o algoritmo avaliado é de extração, só se pode comparar palavras chave extraídas com palavras do próprio resumo.
-
-Como pode-se perceber, a quantidade de artigos recuperados difere da quantidade solicitada. Alguns dos motivos que causaram a redução do número de artigos nos conjuntos de dados foram: alguns artigos no PubMed não possuem os atributos solicitados na configuração de \emph{download}. As rotinas descritas no parágrafo acima causam a exclusão de alguns artigos, quando estes ficam sem palavras-chave geradas ou termos MeSH.
 
 \subsection{Discussão dos resultados do \emph{PubMed Dataset}}
 
@@ -100,7 +92,9 @@ A próxima etapa é a obtenção dos conceitos, que são os descritores propriam
 
 Existem dois tipos de palavras-chave usadas na base de dados do PubMed: os termos de indexação Medical Subject Headings (MeSH), que são termos de um vocabulário controlado atribuído por especialistas do NLM, e as palavras-chave fornecidas pelos autores do artigo. Os experimentos apresentados a seguir foram avaliados utilizando como referência os termos MeSH, pois se encontraram poucos artigos com palavras-chave atribuídas pelos autores.
 
-Foram criados dois \emph{datasets} com a utilização da biblioteca \emph{PubMed Dataset} apresentada anteriormente. Ambos os \emph{datasets} foram criados com um número máximo de artigos igual a 4.500. Cada conjunto de dados passou por um processo de filtragem descrito a seguir:
+Foram criados dois \emph{datasets} com a utilização da biblioteca \emph{PubMed Dataset} apresentada anteriormente. Cada artigo necessita conter o resumo que será
+utilizado para a obtenção das palavras chave geradas pelo algoritmo e também dos termos MeSH, pois estas são a referência da comparação com as palavras
+automaticamente extraídas pelo \emph{Extraction Engine}. Ambos os \emph{datasets} foram criados com um número máximo de artigos igual a 4.500. Cada conjunto de dados passou por um processo de filtragem descrito a seguir:
 
 \begin{itemize}
     \item dentro do conjunto de artigos inicialmente recuperados, foram excluídos aqueles artigos que não possuíam resumo ou termos MeSH;
@@ -290,10 +284,31 @@ A Tabela \ref{tab:representacao} mostra as palavras-chave que formam o conjunto 
 Pela tabela acima pode-se observar que cada palavra chave global representa um número reduzido de artigos comparado com a total de artigos retornado, o que facilitaria a busca por temas mais específicos.
 
 \section{Resultados \emph{BioSearch Refinement}}
-O mais importante para o sistema como um todo é o tempo de resposta das requisições feitas pelo usuário. Como o \emph{BioSearch Refinement} é um sistema de plataforma \emph{Web}, deve funcionar em um tempo aceitável para um usuário de \emph{Internet}. Para isto, foi feita uma analise da eficiência do sistema como um todo em relação ao tempo de execução.
+Uma das características mais importantes em um sistema \emph{Web} é a sua rapidez, para que o usuário possa ter uma navegação confortável. O \emph{BioSearch Refinement} sendo um sistema deste tipo, deve funcionar em um tempo aceitável para um usuário de \emph{Internet}. Para isto, foi feita uma analise da eficiência do sistema como um todo em relação ao tempo de execução.
 
-Os testes de desempenho foram executados em um computador com processador Intel Core 2 Duo, 2.13 Ghz e 3GB de RAM. Como visto na Figura  \ref{fig:fluxoExecucaoEE}, observa-se que o algoritmo \emph{Extraction Engine} está dividido em diversas etapas. A primeira etapa, que é a obtenção dos artigos do servidor PubMed, só depende das condições do próprio servidor e da conexão do usuário, logo o tempo de execução desta parte independe do sistema. O tempo levado em média para obter 1000 artigos do servidor do PubMed foi de 58 segundos. Notou-se que a maior parte do tempo, não é a execução do algoritmo propriamente dito, mas sim a obtenção dos artigos do servidor PubMed. 
+Os testes de desempenho foram executados em um computador com processador Intel Core 2 Duo, 2.13 Ghz e 3GB de RAM. Como visto na Figura  \ref{fig:fluxoExecucaoEE}, observa-se que o algoritmo \emph{Extraction Engine} está dividido em diversas etapas. A primeira etapa, que é a obtenção dos artigos do servidor PubMed, só depende das condições do próprio servidor e da conexão do usuário, logo o tempo de execução desta parte independe do sistema. O tempo levado em média para obter 1000 artigos do servidor do PubMed foi de 58 segundos. Notou-se que a maior parte do tempo, não é a execução do algoritmo propriamente dito, mas sim a obtenção dos artigos do servidor PubMed.
+
+Foram medidos os tempos de carregamento de página no NCBI e no \emph{BioSearch Refinement} para verificar o quão próxima é a velocidade de carregamento dos sistemas. Como o banco de dados PubMed é local ao NCBI, o tempo de resposta será sempre mais rápido do que pela utilização do E-Utils, mas como mostrado na Tabela \ref{tab:temposCarregamentoNCBIvsBSR} o tempo do \emph{BioSearch Refinement} é em média 50\% maior do que do NCBI.
+
+\begin{table}[htbp]
+\center
+\begin{tabular}{|l|r|r|}
+\hline
+\multicolumn{ 1}{|c|}{\textbf{Termo de busca}} & \multicolumn{ 2}{c|}{\textbf{Tempo (segundos)}} \\ \cline{ 2- 3}
+\multicolumn{ 1}{|l|}{} & \multicolumn{1}{l|}{NCBI} & \multicolumn{1}{l|}{BioSearch Refinement} \\ \hline
+mycobacterium tuberculosis & 3,4 & 6 \\ \hline
+whey protein effects & 2,7 & 6,2 \\ \hline
+influenza h1n1 virus & 3,3 & 5,3 \\ \hline
+\end{tabular}
+\caption{Tempo de carregamento de página NCBI e BioSearch Refinement}
+\label{tab:temposCarregamentoNCBIvsBSR}
+\end{table}
+
+Outro fator que influencia no tempo de download é o fato de que o NCBI não carrega os artigos por completo para a exibição, ele utiliza o E-Summary que carrega menos atributos do que o E-Fetch. O \emph{BioSearch Refinement} utiliza o E-Fetch, pois são necessários os resumos dos artigos para serem utilizados no \emph{Extraction Engine}. A seguir são mostrados os resultdos obtidos para os tempos de execução de diversas etapas do \emph{Extraction Engine} que impactam no desempenho do \emph{BioSearch Refinement}.
+
 Os tempos de execução exibidos na Tabela \ref{tab:temposExecucaoBSR} abaixo são acumulativos das etapas, desde a tokenização de sentenças, PoST, \emph{noun chunking} até a extração global de conceitos ou sumarização. Foram processados 50, 100, 200, 500, 1000 e 2000 artigos de ambos \emph{datasets} com 100\% de extração local de conceitos.
+
+Pode-se observar que o tempo total para o processamento de 50 até 100 artigos é em torno de 1 segundo, um usuário que solicita a geração de palavras-chave geralmente navega nesta faixa de artigos, ou seja, de 2 a 4 páginas.
 
 \begin{table}[htbp]
 \center
@@ -320,5 +335,4 @@ Os tempos de execução exibidos na Tabela \ref{tab:temposExecucaoBSR} abaixo s�
 \caption{Tempo de execução das etapas do algoritmo}
 \label{tab:temposExecucaoBSR}
 \end{table}
-
 

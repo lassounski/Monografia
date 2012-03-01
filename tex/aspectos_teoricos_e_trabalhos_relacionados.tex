@@ -44,7 +44,11 @@ O método de atribuição de termos seleciona os descritores de um vocabulário 
 
  Segundo Gruber \cite{Gruber1993} uma ontologia é a especificação de um vocabulário para uma determinado domínio, definição de classe, relações, funções e outros objetos. Ela descreve formalmente um domínio e é composta por termos e o relacionamento entre estes \cite{Antoniou2004}. As ontologias são muito utilizadas nos campos de biologia e medicina, pois estas possuem uma grande quantidade de termos e relações entre eles. Tem sido feito muito esforço nas comunidades acadêmicas de vários países na pesquisa e desenvolvimento desta tecnologia. As principais ontologias na área de biomedicina atualmente são a \emph{Gene Ontology} (GO) \cite{GO2000} que faz um mapeamento semântico de genes e produtos genéticos como proteínas, \emph{Medical Subject Headings} (MeSH) \cite{MESH2000} utilizado pelo NCBI na indexação de documentos científicos e a \emph{Foundational Model of Anatomy}  (FMA) \cite{FMA2003} que é uma ontologia para representação de anatomia humana.
 
-\subsubsection{GoPubMed}
+\section{Sistemas de refinamento}
+
+A seguir são apresentados alguns trabalhos de sistemas que permitem a categorização de artigos retornados a partir de uma busca do PubMed. Como se pode perceber existem diversas abordagens para o agrupamento de artigos similares, mas poucos dos trabalhos pesquisados fazem a utilização de um algoritmo próprio de extração de palavras-chave para classificar documentos. \cite{Maron1958} tiveram a ideia de organizar os documentos baseando-se em uma probabilidade de relevância. Os termos de busca inseridos pelo usuário eram processados pelo teorema de Bayes e era determinada a probabilidade de cada documento ser relevante para o usuário. A vantagem desta abordagem era eliminar a busca booleana que é ineficiente quanto à seleção de documentos relevantes.
+
+\subsection{GoPubMed}
 
 Uma ferramenta que utiliza uma abordagem baseada em ontologias para organização dos resultados obtidos do PubMed é o GoPubMed\footnote{\href{http://www.gopubmed.com}{http://www.gopubmed.com}} \cite{Doms2005}, que utiliza o Gene Ontology e o MeSH. Este sistema divide as informações em quatro categorias principais (o que, quem, onde e quando) através das informações obtidas do PubMed e  permite o usuário restringir sua busca utilizando estes campos.
 
@@ -59,10 +63,6 @@ Uma ferramenta que utiliza uma abordagem baseada em ontologias para organizaçã
 \end{enumerate}
 
 Neste trabalho não optamos pela utilização de ontologias, pois o vocabulário destas é controlado e deve ser constantemente atualizado. Alguns artigos não possuem termos MeSH por serem inovadores ou antigos. As palavras-chave retiradas diretamente do resumo e título são mais representativas e mais descritivas para um determinado artigo do que termos predefinidos.
-
-\section{Sistemas de refinamento}
-
-A seguir são apresentados alguns trabalhos de sistemas que permitem a categorização de artigos retornados a partir de uma busca do PubMed. Como se pode perceber existem diversas abordagens para o agrupamento de artigos similares, mas poucos dos trabalhos pesquisados fazem a utilização de um algoritmo próprio de extração de palavras-chave para classificar documentos. \cite{Maron1958} tiveram a ideia de organizar os documentos baseando-se em uma probabilidade de relevância. Os termos de busca inseridos pelo usuário eram processados pelo teorema de Bayes e era determinada a probabilidade de cada documento ser relevante para o usuário. A vantagem desta abordagem era eliminar a busca booleana que é ineficiente quanto à seleção de documentos relevantes.
 
 \subsection{XplorMed}
 A ferramenta XplorMed de \cite{Perez-Iratxeta2001} é uma das primeiras a propor uma maneira de melhorar a busca por artigos relevantes no PubMed e se utiliza de cálculos aritméticos simples para criar relacionamentos entre palavras nos resumos e, assim, identificar palavras-chave. Neste sistema, a relação entre palavras é criada utilizando lógica fuzzy onde há um relacionamento entre duas palavras \emph{x} e \emph{y} medido por um valor entre 0 e 1. O valor é medido pela seguinte equação:
@@ -118,14 +118,10 @@ precision = (núm. de documentos corretamente recuperados) / (núm. total de doc
 }
 \end{center}
 
-O número de palavras-chave corretamente extraídas na avaliação justa é feito calculando o somatório dos pesos, assim se temos duas correspondências exatas (1) e uma de Sufixo Classe 1 (0.9) e uma de Prefixo Classe 2 (0.5), o número de correspondências corretas é 3.4. Cada correspondência fica entre 0 e 1.
-
 A \emph{F1-measure} é uma métrica que expressa a média balanceada entre o \emph{recall} e o \emph{precision} \cite{Feldman2007}.
 \begin{center}
 \textbf{
 \emph{F1-measuere} = 2 / ( (1 / \emph{recall}) + (1 / \emph{precision}))
 }
 \end{center}
-
-COMO SERÁ APRESENTADO NOS PRÓXIMOS CAPÍTULOS
 

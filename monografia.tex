@@ -38,7 +38,7 @@
     numberstyle=\ttfamily\footnotesize,
     stepnumber=1,
     numbersep=10pt,
-    keywords={class, for, while, if, else, and, or, break, continue, return, assert, import, do, true, false, try, catch, throws, private, public, void, int, float, double, byte, short, char},
+    keywords={class, for, while, if, else, and, or, break, continue, return, assert, import, do, true, false, try, catch, throws, private, public, void, int, float, double, byte, short, char, new},
     emph={ABSTRACT,MESH_TERMS,PMID,TITLE,AUTHOR_NAMES,JOURNAL_TITLE,PUB_YEAR,AUTHOR_KWS,AUTHOR},
     emph={[2]Funcionalidade, Como, Eu, E, quero, Para, Cenario, Dado, Quando, Entao, should, should_not, @matcher, context, it, describe, expect, to, world, @step, step, assert_equal, fail, expect, to_not, raise_error},
     emphstyle=[2]\color{MidnightBlue}\textbf,
@@ -53,16 +53,34 @@
 \autor{Kirill Lassounski}
 \instituicao{Universidade Estadual do Norte Fluminense Darcy Ribeiro}
 \orientador[Orientadora: ]{Sahudy Montenegro González}
+\coorientador[Co-orientadora:]{Annabell Del Real Tamariz}
+\comentario{Monografia apresentada junto ao Curso de Graduação em Ciência da
+Computação da Universidade Estadual do Norte Fluminense Darcy Ribeiro como
+requisito para obtenção do título de Bacharel em Ciência da Computação, sob
+orientação da Prof. Dra. Sahudy Montenegro González e Prof. Dra. Annabell Del Real Tamariz}
 \local{Campos dos Goytacazes/RJ}
-\data{2011}
+\data{2012}
+
+
 
 
 %--------------------------------- Documento -----------------------------------
 
 \begin{document}
-
+    
+    
+    
+    \capa
     \folhaderosto
+    
+    \include{tex/folhadeaprovacao}   
+    \include{tex/epigrafe}
+    \include{tex/agradecimentos}
+    
+    
     \sumario
+    \listoffigures
+    \listoftables
     \include{tex/resumo_e_abstract}
     \include{tex/introducao}
     \include{tex/aspectos_teoricos_e_trabalhos_relacionados}
