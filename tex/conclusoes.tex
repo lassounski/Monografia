@@ -28,7 +28,7 @@ A utilização do \emph{PubMed Dataset} no \emph{BioSearch Refinement} se mostro
 
 \section{\emph{Extraction Engine}}
 
-O algoritmo de extração de palavras-chave obteve bons resultados possuindo um \emph{recall} em torno de 70\%, ou seja, dos termos MeSH atribuídos aos artigos que existem no texto, 70\% foram recuperados pelo algoritmo.
+O algoritmo de extração de palavras-chave obteve bons resultados possuindo um \emph{recall} em torno de 70\%, ou seja, dos termos MeSH atribuídos aos artigos que existem no texto, 70\% foram recuperados pelo algoritmo. O ideal seria obter outra fonte para fazer as comparações que não fossem os termos MeSH, por exemplo um conjunto de artigos onde todos os conceitos importantes no resumo de um artigo são destacados por um profissional da área de biomedicina. Desta maneira, os resultados poderiam ser melhores.
 
 As palavras-chave exibidas para o usuário destacam os assuntos mais abordados pelos artigos e representam sub-conjuntos do original, que podem ajudar no processo de busca. Uma expansão no algoritmo poderia permitir que o usuário navegue pelas palavras-chave através de um modelo de hierarquia, onde palavras-chave mais gerais contem palavras-chave mais específicas.
 
@@ -36,12 +36,12 @@ Vale notar que o \emph{Extraction Engine} pode ser usado para outras áreas de a
 
 \section{\emph{BioSearch Refinement}}
 
-O sistema desenvolvido possui uma \emph{interface} enriquecida com componentes visuais animados que favorecem a usabilidade, a navegação por abas facilita a organização da informação do usuário. O tempo de resposta da aplicação é aceitável, mas pode ser melhorado com técnicas de otimização.
+O sistema desenvolvido possui uma \emph{interface} enriquecida com componentes visuais animados que favorecem a usabilidade, a navegação por abas facilita a organização da informação do usuário. Para ser disponibilizado na Web, a aplicação ainda precisa passar por testes de integração e são necessárias algumas correções na lógica da \emph{interface}.
 
 \section{Contribuições}
 O resultado do trabalho desenvolvido é de código aberto e é disponibilizado para utilização e/ou modificação, melhoramentos podem ser submetidos para a origem e serão avaliadas. Tanto a biblioteca \emph{PubMed Dataset} como o sistema \emph{BioSearch Refinement} podem ser encontrados no GitHub em \url{https://github.com/lassounski/PubMed-Dataset} e \url{https://github.com/lassounski/BioSearch-Refinement}.
 
-O \emph{PubMed Dataset} foi apresentado e publicado no BIOINFORMATICS 2012 (\emph{International Conference on Bioinformatics Models, Methods and Algorithms}). E o \emph{BioSearch Refinement} foi aceito para publicação na Conferência IADIS Ibero Americana de 2011.
+O \emph{PubMed Dataset} foi apresentado e publicado no BIOINFORMATICS 2012 (\emph{International Conference on Bioinformatics Models, Methods and Algorithms}) \cite{Lassounski2012}. E o \emph{BioSearch Refinement} foi aceito para publicação na Conferência IADIS Ibero Americana de 2011.
 
 \section{Trabalhos futuros}
 As perspectivas de trabalhos futuros por parte do \emph{Extraction Engine} visam uma mudança na arquitetura do algoritmo para permitir a categorização de conceitos por hierarquias. Mesmo conceitos diferentes como "platelets flow",\ "platelet",\ "platelet plasma"\ e "platelets expression", possuem

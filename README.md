@@ -1,8 +1,8 @@
-# Projeto Supervisionado I
+# Monografia
 
-Este projeto é o controle de versão do meu artigo feito para a disciplina
-Projeto Supervisionado I no graduação em Ciência da Computação da Universidade
-Estadual do Norte Fluminense (UENF).
+Aqui está a monografia feita para a disciplina
+Trabalho de Conclusão de Curso no graduação em Ciência da Computação da Universidade
+Estadual do Norte Fluminense (UENF) com o título: BioSearch Refinement: Um sistema para facilitar a busca de artigos relevantes no PubMed
 
 
 # Dependências

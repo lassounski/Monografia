@@ -79,8 +79,7 @@ contidos no banco de dados de origem.
 \label{tab:tempoExecucao}
 \end{table}
 
-Em um ambiente de teste e avaliação, os testes são criados progressivamente e muitas vezes são adicionados casos de teste mais específicos. Dado esse cenário, é óbvio o fato de que os testes são executados diversas vezes. Sem a utilização desta biblioteca, o tempo gasto para a criação dos dados de teste e execução dos testes propriamente ditos levariam um tempo
-considerável. Como podemos observar na Tabela \ref{tab:tempoExecucao}, o tempo gasto para o download dos dados é muito grande e também devemos ressaltar que a consistência do conjunto de dados não é garantida visto que os dados retornados pelo PubMed podem variar com o passar do tempo.
+Em um ambiente de teste e avaliação, os testes são criados progressivamente e muitas vezes são adicionados casos de teste mais específicos. Dado esse cenário, é óbvio o fato de que os testes são executados diversas vezes. Sem a criação de um conjunto de dados de teste gravado em disco, os artigos são recuperados a cada execução, fazendo com que o testador espere o download dos artigos a cada teste. Outro problema é que os dados no PubMed podem ser alterados através da adição de um novo artigo ao banco, o que deixaria um teste anterior incongruente com um teste novo. 
 
 \section{Resultados do \emph{Extraction Engine}}
 
@@ -233,7 +232,7 @@ Correspondência \emph{substring}  & 1144 & 1593 & 0,047 & 0,087 & 0,142 & 0,231
 \label{tab:distribuicaoJusta}
 \end{table}
 
-Pode-se observar que a maior parte das correspondências ocorre por sufixo de classe 2 e por correspondência por \emph{substring}. Isso implica que a maioria das palavras-chave geradas são ou uma especialização do termo MeSH, ou fazem parte deste termo. As predições que possuem mais palavras do que um termo MeSH não são identificadas. Isto pode ser devido a que os termos MeSH vêm de um vocabulário controlado, o que limita o poder de comparação com as predições. A correlação e a razão de predição também se vêm afetadas pelo número grande de predições e poucos termos MeSH no \emph{dataset}.
+Pode-se observar que a maior parte das correspondências ocorre por sufixo de classe 2 e por correspondência por \emph{substring}. Isso implica que a maioria das palavras-chave geradas são ou uma especialização do termo MeSH, ou fazem parte deste termo. As predições que possuem mais palavras do que um termo MeSH não são identificadas nesta avaliação, então predições que são mais especializadas que um termo MeSH não são contadas. A correlação e a razão de predição são afetadas pelo número de predições superior ao número de termos MeSH no \emph{dataset}.
 
 Os resultados obtidos consideram (1) a avaliação exata, onde todos os casos parciais são considerados negativos e (2) a avaliação relaxada onde se analisam as correspondências parciais como casos positivos e (3) a avaliação justa onde se analisam as correspondências parciais segundo seu peso. Ao executar o \emph{Extraction Engine}, foram calculados os valores das métricas de \emph{precision}, \emph{recall} e \emph{F1-measure} para cada \emph{dataset}. Esses resultados são apresentados na Tabela \ref{tab:resultadosPrecisionRecallEE}.
 

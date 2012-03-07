@@ -1,11 +1,11 @@
 \select@language {brazil}
-\contentsline {table}{\numberline {1}{\ignorespaces Conjuntos de dados criado com o PubMed Dataset}}{38}{table.abstract.4.1}
-\contentsline {table}{\numberline {2}{\ignorespaces Desempenho da ferramenta PubMed Dataset na constru\IeC {\c c}\IeC {\~a}o dos conjuntos de dados}}{40}{table.abstract.4.2}
-\contentsline {table}{\numberline {3}{\ignorespaces Conjuntos de dados experimentais}}{41}{table.abstract.4.3}
-\contentsline {table}{\numberline {4}{\ignorespaces Pesos e penalidades por classe}}{44}{table.abstract.4.4}
-\contentsline {table}{\numberline {5}{\ignorespaces Dados da execu\IeC {\c c}\IeC {\~a}o por \emph {dataset}}}{45}{table.abstract.4.5}
-\contentsline {table}{\numberline {6}{\ignorespaces \emph {Dataset} 1, 2 - Distribui\IeC {\c c}\IeC {\~a}o das correspond\IeC {\^e}ncias de predi\IeC {\c c}\IeC {\~o}es}}{46}{table.abstract.4.6}
-\contentsline {table}{\numberline {7}{\ignorespaces Resultados das tr\IeC {\^e}s avalia\IeC {\c c}\IeC {\~o}es por dataset}}{47}{table.abstract.4.7}
-\contentsline {table}{\numberline {8}{\ignorespaces Representa\IeC {\c c}\IeC {\~a}o do conjunto de palavras-chave global por dataset}}{48}{table.abstract.4.8}
-\contentsline {table}{\numberline {9}{\ignorespaces Tempo de carregamento de p\IeC {\'a}gina NCBI e BioSearch Refinement}}{49}{table.abstract.4.9}
-\contentsline {table}{\numberline {10}{\ignorespaces Tempo de execu\IeC {\c c}\IeC {\~a}o das etapas do algoritmo}}{50}{table.abstract.4.10}
+\contentsline {table}{\numberline {1}{\ignorespaces Conjuntos de dados criado com o PubMed Dataset}}{40}{table.abstract.4.1}
+\contentsline {table}{\numberline {2}{\ignorespaces Desempenho da ferramenta PubMed Dataset na constru\IeC {\c c}\IeC {\~a}o dos conjuntos de dados}}{42}{table.abstract.4.2}
+\contentsline {table}{\numberline {3}{\ignorespaces Conjuntos de dados experimentais}}{43}{table.abstract.4.3}
+\contentsline {table}{\numberline {4}{\ignorespaces Pesos e penalidades por classe}}{46}{table.abstract.4.4}
+\contentsline {table}{\numberline {5}{\ignorespaces Dados da execu\IeC {\c c}\IeC {\~a}o por \emph {dataset}}}{47}{table.abstract.4.5}
+\contentsline {table}{\numberline {6}{\ignorespaces \emph {Dataset} 1, 2 - Distribui\IeC {\c c}\IeC {\~a}o das correspond\IeC {\^e}ncias de predi\IeC {\c c}\IeC {\~o}es}}{48}{table.abstract.4.6}
+\contentsline {table}{\numberline {7}{\ignorespaces Resultados das tr\IeC {\^e}s avalia\IeC {\c c}\IeC {\~o}es por dataset}}{49}{table.abstract.4.7}
+\contentsline {table}{\numberline {8}{\ignorespaces Representa\IeC {\c c}\IeC {\~a}o do conjunto de palavras-chave global por dataset}}{50}{table.abstract.4.8}
+\contentsline {table}{\numberline {9}{\ignorespaces Tempo de carregamento de p\IeC {\'a}gina NCBI e BioSearch Refinement}}{51}{table.abstract.4.9}
+\contentsline {table}{\numberline {10}{\ignorespaces Tempo de execu\IeC {\c c}\IeC {\~a}o das etapas do algoritmo}}{52}{table.abstract.4.10}
